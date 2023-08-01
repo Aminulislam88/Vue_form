@@ -1,27 +1,31 @@
 <script setup>
 import {ref,reactive} from 'vue'
-const person=reactive({
-    name:"Aminul",
-    age:29,
-    job:"web Developer"
-})
+const displayImage= ref(true)
 </script>
 
 <template >
 <section class="mx-auto container">
     <h1 class="text-2xl mb-10"> Vue Form</h1>
-    <p class="pb-5">{{ person }}</p>
+    <p class="pb-5">{{ displayImage }}</p>
+    <label for=""> Display Random Image</label>
+    <input class="ml-2" type="checkbox" v-model="displayImage"/>
+    <p>
+        <input type="radio" name="display" :value="true" v-model="displayImage"> On <br>
+        <input type="radio" name="display" :value="false" v-model="displayImage"> Off <br>
+    </p>
+    <img
+    v-show="displayImage"
+    class="mt-10 mx-auto w-[500px]"
+    :src="`https://source.unsplash.com/random`"
+    alt=""
+    />
+    <!-- <img
+    v-show="displayImage"
+    class="mt-10 mx-auto w-[500px]"
+    :src="`https://source.unsplash.com/random?version=${Math.random()}`"
+    alt=""
+    /> -->
     
-    <!-- <div class="flex flex-col mb-5 text-left">
-        <label for="name">Name</label>
-        <input type="text" class="border border-gray-300 runded-md p-2" v-model="person.name"/>
-
-    </div> -->
-    <div class="flex flex-col mb-5 text-left" v-for="(value,key,index) in person" :key="index">
-        <label for="name">{{key}}</label>
-        <input type="text" class="border border-gray-300 runded-md p-2" v-model="person[key]"/>
-
-    </div>
 </section>
 
 
