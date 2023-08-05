@@ -1,38 +1,31 @@
 <script setup>
 import {ref,reactive} from 'vue'
-const persons=reactive([
-    {name:'Jhon Doe', age:25, email:'jhon@doe.com'},
-    {name:'jane Smith', age:26, email:'jane@smith.com'},
-    {name:'John Smith', age:27, email:'john@smith.com'},
-    {name:'Jane Smith',age:28,email:'jane@smaith.com'}
-])
-const activeIndex=ref(0)
+import {countries} from './data/countries'
+const search=ref('')
+function getFilterredCountries(){
+    return countries.filter(country=>{
+        return country.name.toLowerCase().startsWith(search.value.toLowerCase())
+    })
+}
 </script>
 
 
 <template >
-<section class="mx-auto container">
+<section class="mx-auto container text-left">
     <h1 class="text-2xl mb-10"> Vue Form</h1>
-    <p class="mb-5">{{ persons }}</p>
-    <div class="flex">
-        <div class="w-1/2">
-            <p>{{ activeIndex }}</p>
-            <p class="mb-10">
-                <h2>Select a person</h2>
-                <select name="person" id="person" v-model="activeIndex">
-                    <option :value="index" v-for="(person,index) in persons" :key="index">{{ person.name }}</option>
-                </select>
-            </p>
+    <p class="my-5">{{ search }}</p>
+    <p class="my-5">
+        search: <input class="p-3" type="text" v-model="search" >
+    </p>
+    
 
-        </div>
-        <div>
-            <div class="flex flex-col">
-                <input class="my-3" type="text" :placeholder="key" v-model="persons[activeIndex][key]" v-for="(value, key, index2) in persons[activeIndex]" :key="key">
-            </div>
-        </div>
-
-    </div>
-
+    <p class="mt-10">
+        <ul>
+            <li v-for="country in getFilterredCountries()" :key="country.code">
+                {{ country.name }}
+            </li>
+        </ul>
+    </p>
    
    
     
